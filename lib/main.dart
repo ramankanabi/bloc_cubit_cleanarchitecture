@@ -14,7 +14,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      // sss
       home: BlocProvider(
         create: (context) => AdviceBloc(),
         child: const AdVicePage(),
