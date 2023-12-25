@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_bloc_course/app/pages/advicePage/advice_page.dart';
-import 'package:flutter_bloc_course/app/pages/advicePage/bloc/advice_bloc.dart';
+import 'package:flutter_bloc_course/app/pages/advicePage/cubit/advice_cubit.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: BlocProvider(
-        create: (context) => AdviceBloc(),
+        create: (context) => AdviceCubit(),
         child: const AdVicePage(),
       ),
     );

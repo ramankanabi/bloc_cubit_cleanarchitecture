@@ -1,20 +1,35 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_bloc_course/domain/failures/failure.dart';
+import 'package:flutter_bloc_course/domain/usecases/advice_usecase.dart';
 
 part 'advice_state.dart';
 
+const serverErrorMessage = "Ops, Api error , please try again";
+const cacheErrorMessage = "Oops, Cache error, please try again";
+const defaultEttotMessage = "Oops, Something went wrong";
+
 class AdviceCubit extends Cubit<AdviceState> {
   AdviceCubit() : super(AdviceStateInitial());
-
+  final adviceUsecase = AdviceUseCase();
   adviceRequestData() async {
     emit(AdviceStateLoading());
+    final failureOrAdvice = await adviceUsecase.getAdvoce();
+    failureOrAdvice.fold(
+        (failure) => emit(AdviceStateError(_failureMessage(failure))),
+        (advice) => emit(AdviceStateLoaded(advice.advice)));
+  }
+}
 
-    debugPrint("the request has triggered");
+String _failureMessage(Failure failure) {
+  switch (failure.runtimeType) {
+    case ServerFailure:
+      return serverErrorMessage;
 
-    await Future.delayed(const Duration(seconds: 3));
+    case CacheFailure:
+      return cacheErrorMessage;
 
-    debugPrint("the data succefully has been gotten");
-    emit(const AdviceStateLoaded("helloo from my bottm of heart"));
+    default:
+      return defaultEttotMessage;
   }
 }

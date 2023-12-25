@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_bloc_course/app/pages/advicePage/bloc/advice_bloc.dart';
+import 'package:flutter_bloc_course/app/pages/advicePage/cubit/advice_cubit.dart';
 
 class AdVicePage extends StatelessWidget {
   const AdVicePage({super.key});
@@ -13,7 +13,7 @@ class AdVicePage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            BlocBuilder<AdviceBloc, AdviceState>(
+            BlocBuilder<AdviceCubit, AdviceState>(
               builder: (context, state) {
                 if (state is AdviceStateInitial) {
                   const Text("Welcom to our hub , let's play something");
@@ -27,9 +27,9 @@ class AdVicePage extends StatelessWidget {
                     ),
                   );
                 } else if (state is AdviceStateError) {
-                  return const Text(
-                    "ooooppssssssss",
-                    style: TextStyle(fontSize: 26, color: Colors.red),
+                  return Text(
+                    state.message,
+                    style: const TextStyle(fontSize: 26, color: Colors.red),
                   );
                 }
                 return const SizedBox.shrink();
@@ -37,7 +37,7 @@ class AdVicePage extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () {
-                BlocProvider.of<AdviceBloc>(context).add(AdviceRequestData());
+                BlocProvider.of<AdviceCubit>(context).adviceRequestData();
               },
               child: const Text("Press to get"),
             )
