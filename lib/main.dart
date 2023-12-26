@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_bloc_course/app/pages/advicePage/advice_page.dart';
-import 'package:flutter_bloc_course/app/pages/advicePage/cubit/advice_cubit.dart';
+import 'package:flutter_bloc_course/2_app/pages/advicePage/advice_page.dart';
+import 'package:flutter_bloc_course/2_app/pages/advicePage/cubit/advice_cubit.dart';
 
 void main() {
   runApp(const MyApp());

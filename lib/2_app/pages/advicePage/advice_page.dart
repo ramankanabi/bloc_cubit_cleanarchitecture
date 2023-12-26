@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_bloc_course/app/pages/advicePage/cubit/advice_cubit.dart';
+import 'package:flutter_bloc_course/2_app/pages/advicePage/cubit/advice_cubit.dart';
 
 class AdVicePage extends StatelessWidget {
   const AdVicePage({super.key});
@@ -20,10 +20,13 @@ class AdVicePage extends StatelessWidget {
                 } else if (state is AdviceStateLoading) {
                   return const CircularProgressIndicator();
                 } else if (state is AdviceStateLoaded) {
-                  return Text(
-                    state.advice,
-                    style: const TextStyle(
-                      fontSize: 26,
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      state.advice,
+                      style: const TextStyle(
+                        fontSize: 26,
+                      ),
                     ),
                   );
                 } else if (state is AdviceStateError) {
