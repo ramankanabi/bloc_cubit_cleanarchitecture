@@ -1,9 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_bloc_course/2_app/pages/advicePage/cubit/advice_cubit.dart';
+import 'package:flutter_bloc_course/injection.dart';
 
-class AdVicePage extends StatelessWidget {
-  const AdVicePage({super.key});
+class AdvicePageWrapperProvider extends StatelessWidget {
+  const AdvicePageWrapperProvider({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => sl<AdviceCubit>(),
+      child: const AdvicePage(),
+    );
+  }
+}
+
+class AdvicePage extends StatelessWidget {
+  const AdvicePage({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(

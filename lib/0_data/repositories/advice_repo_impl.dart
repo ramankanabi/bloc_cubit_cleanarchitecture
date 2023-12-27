@@ -6,8 +6,8 @@ import 'package:flutter_bloc_course/1_domain/failures/failure.dart';
 import 'package:flutter_bloc_course/1_domain/repositories/advice_repository.dart';
 
 class AdviceRepoImpl implements AdviceRepo {
-  final AdviceRemoteDataSource adviceRemoteDatasource =
-      AdviceRemoteDataSourceImpl();
+  final AdviceRemoteDataSource adviceRemoteDatasource;
+  AdviceRepoImpl({required this.adviceRemoteDatasource});
   @override
   Future<Either<Failure, AdviceEntity>> getAdviceFromDataSource() async {
     try {

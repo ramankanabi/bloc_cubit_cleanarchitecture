@@ -10,8 +10,8 @@ const cacheErrorMessage = "Oops, Cache error, please try again";
 const defaultEttotMessage = "Oops, Something went wrong";
 
 class AdviceCubit extends Cubit<AdviceState> {
-  AdviceCubit() : super(AdviceStateInitial());
-  final adviceUsecase = AdviceUseCase();
+  AdviceCubit({required this.adviceUsecase}) : super(AdviceStateInitial());
+  final AdviceUseCase adviceUsecase;
   adviceRequestData() async {
     emit(AdviceStateLoading());
     final failureOrAdvice = await adviceUsecase.getAdvice();
