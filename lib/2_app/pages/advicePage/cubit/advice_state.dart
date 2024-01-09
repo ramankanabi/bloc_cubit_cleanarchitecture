@@ -1,17 +1,21 @@
 part of 'advice_cubit.dart';
 
-sealed class AdviceState extends Equatable {
-  const AdviceState();
+sealed class AdviceCubitState extends Equatable {
+  const AdviceCubitState();
 
   @override
   List<Object?> get props => [];
 }
 
-final class AdviceStateInitial extends AdviceState {}
+final class AdviceStateInitial extends AdviceCubitState {
+  const AdviceStateInitial();
+}
 
-final class AdviceStateLoading extends AdviceState {}
+final class AdviceStateLoading extends AdviceCubitState {
+  const AdviceStateLoading();
+}
 
-final class AdviceStateLoaded extends AdviceState {
+final class AdviceStateLoaded extends AdviceCubitState {
   final String advice;
   const AdviceStateLoaded(this.advice);
 
@@ -19,7 +23,7 @@ final class AdviceStateLoaded extends AdviceState {
   List<Object?> get props => [advice];
 }
 
-final class AdviceStateError extends AdviceState {
+final class AdviceStateError extends AdviceCubitState {
   final String message;
   const AdviceStateError(this.message);
 

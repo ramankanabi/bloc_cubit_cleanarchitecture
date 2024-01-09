@@ -33,6 +33,9 @@ void main() {
             AdviceModel(id: 1, advice: "test"),
           ),
         );
+
+        verify(mockAdviceRemoteDataSource.getRandomAdviceFromapi()).called(1);
+        verifyNoMoreInteractions(mockAdviceRemoteDataSource);
       });
     });
 

@@ -29,6 +29,9 @@ void main() {
         expect(result.isLeft(), false);
         expect(result.isRight(), true);
         expect(result, value);
+
+        verify(mockAdviceRepo.getAdviceFromDataSource()).called(1);
+        verifyNoMoreInteractions(mockAdviceRepo);
       });
     });
 
@@ -41,6 +44,8 @@ void main() {
         expect(result.isLeft(), true);
         expect(result.isRight(), false);
         expect(result, Left(GeneralFailure()));
+        verify(mockAdviceRepo.getAdviceFromDataSource()).called(1);
+        verifyNoMoreInteractions(mockAdviceRepo);
       });
       test("should return SeverFailure", () async {
         when(mockAdviceRepo.getAdviceFromDataSource()).thenAnswer(
@@ -50,6 +55,8 @@ void main() {
         expect(result.isLeft(), true);
         expect(result.isRight(), false);
         expect(result, Left(ServerFailure()));
+        verify(mockAdviceRepo.getAdviceFromDataSource()).called(1);
+        verifyNoMoreInteractions(mockAdviceRepo);
       });
     });
   });

@@ -9,11 +9,12 @@ const serverErrorMessage = "Ops, Api error , please try again";
 const cacheErrorMessage = "Oops, Cache error, please try again";
 const defaultEttotMessage = "Oops, Something went wrong";
 
-class AdviceCubit extends Cubit<AdviceState> {
-  AdviceCubit({required this.adviceUsecase}) : super(AdviceStateInitial());
+class AdviceCubit extends Cubit<AdviceCubitState> {
+  AdviceCubit({required this.adviceUsecase})
+      : super(const AdviceStateInitial());
   final AdviceUseCase adviceUsecase;
   adviceRequestData() async {
-    emit(AdviceStateLoading());
+    emit(const AdviceStateLoading());
     final failureOrAdvice = await adviceUsecase.getAdvice();
     failureOrAdvice.fold(
         (failure) => emit(AdviceStateError(_failureMessage(failure))),

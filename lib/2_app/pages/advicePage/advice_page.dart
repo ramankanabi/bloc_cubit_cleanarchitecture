@@ -26,7 +26,7 @@ class AdvicePage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            BlocBuilder<AdviceCubit, AdviceState>(
+            BlocBuilder<AdviceCubit, AdviceCubitState>(
               builder: (context, state) {
                 if (state is AdviceStateInitial) {
                   const Text("Welcom to our hub , let's play something");
