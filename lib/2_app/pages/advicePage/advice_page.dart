@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_bloc_course/2_app/pages/advicePage/cubit/advice_cubit.dart';
-import 'package:flutter_bloc_course/injection.dart';
+import 'package:flutter_bloc_course/2_app/pages/advicePage/widgets/custom_button.dart';
+import 'package:flutter_bloc_course/2_app/pages/advicePage/widgets/error_message.dart';
+import '../../../injection.dart';
+import 'widgets/advice_field.dart';
 
 class AdvicePageWrapperProvider extends StatelessWidget {
   const AdvicePageWrapperProvider({super.key});
@@ -10,52 +13,62 @@ class AdvicePageWrapperProvider extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => sl<AdviceCubit>(),
-      child: const AdvicePage(),
+      child: const AdvicerPage(),
     );
   }
 }
 
-class AdvicePage extends StatelessWidget {
-  const AdvicePage({super.key});
+class AdvicerPage extends StatelessWidget {
+  const AdvicerPage({super.key});
+
   @override
   Widget build(BuildContext context) {
+    final themeData = Theme.of(context);
     return Scaffold(
-      appBar: AppBar(title: const Text("Advice page")),
-      body: Center(
+      appBar: AppBar(
+        title: Text(
+          'Advicer',
+          style: themeData.textTheme.headlineMedium,
+        ),
+        centerTitle: true,
+     
+      ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 50),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            BlocBuilder<AdviceCubit, AdviceCubitState>(
-              builder: (context, state) {
-                if (state is AdviceStateInitial) {
-                  const Text("Welcom to our hub , let's play something");
-                } else if (state is AdviceStateLoading) {
-                  return const CircularProgressIndicator();
-                } else if (state is AdviceStateLoaded) {
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      state.advice,
-                      style: const TextStyle(
-                        fontSize: 26,
-                      ),
-                    ),
-                  );
-                } else if (state is AdviceStateError) {
-                  return Text(
-                    state.message,
-                    style: const TextStyle(fontSize: 26, color: Colors.red),
-                  );
-                }
-                return const SizedBox.shrink();
-              },
+            Expanded(
+              child: Center(
+                child: BlocBuilder<AdviceCubit, AdviceCubitState>(
+                  builder: (context, state) {
+                    if (state is AdviceStateInitial) {
+                      return Text(
+                        'Your Advice is waiting for you!',
+                        style: themeData.textTheme.headlineMedium,
+                      );
+                    } else if (state is AdviceStateLoading) {
+                      return CircularProgressIndicator(
+                        color: themeData.colorScheme.secondary,
+                      );
+                    } else if (state is AdviceStateLoaded) {
+                      return AdviceField(
+                        advice: state.advice,
+                      );
+                    } else if (state is AdviceStateError) {
+                      return ErrorMessage(message: state.message);
+                    }
+                    return const SizedBox();
+                  },
+                ),
+              ),
             ),
-            ElevatedButton(
-              onPressed: () {
-                BlocProvider.of<AdviceCubit>(context).adviceRequestData();
-              },
-              child: const Text("Press to get"),
+            SizedBox(
+              height: 200,
+              child: Center(
+                child: CustomButton(
+                  onTap: () => BlocProvider.of<AdviceCubit>(context).adviceRequestData(),
+                ),
+              ),
             )
           ],
         ),
